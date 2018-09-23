@@ -1,11 +1,13 @@
 environment:
+    global:
+        TOXENV: py
     matrix:
-        - TOXENV: py27
-        - TOXENV: py36
-        - TOXENV: py37
+        - PYTHON: 'C:\Python27'
+        - PYTHON: 'C:\Python36'
+        - PYTHON: 'C:\Python37'
 
 install:
-    - "SET PATH=C:\\Python37;C:\\Python37\\Scripts;%PATH%"
+    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     - pip install tox virtualenv --upgrade
 
 # Not a C# project
@@ -13,7 +15,11 @@ build: false
 
 test_script: tox
 
-after_test: ".tox\\%TOXENV%\\Scripts\\python setup.py bdist_wheel"
+after_test:
+  - "%PYTHON%\\Scripts\\pip.exe install wheel"
+  - "%PYTHON%\\python.exe setup.py bdist_wheel"
+  - "%PYTHON%-x64\\Scripts\\pip.exe install wheel"
+  - "%PYTHON%-x64\\python.exe setup.py bdist_wheel"
 
 artifacts:
   - path: dist\*
