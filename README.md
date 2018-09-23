@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/asottile/future-breakpoint.svg?branch=master)](https://travis-ci.org/asottile/future-breakpoint)
+[![Build status](https://ci.appveyor.com/api/projects/status/4b6qu7v13vxc3tue/branch/master?svg=true)](https://ci.appveyor.com/project/asottile/future-breakpoint/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/asottile/future-breakpoint/badge.svg?branch=master)](https://coveralls.io/github/asottile/future-breakpoint?branch=master)
 
 future-breakpoint
