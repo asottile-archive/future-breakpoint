@@ -11,6 +11,7 @@
 #endif
 
 static PyObject* _breakpoint(PyObject* self, PyObject* args, PyObject* kwds) {
+    PyObject* retval;
     PyObject *hook = PySys_GetObject("breakpointhook");
 
     if (hook == NULL) {
@@ -18,7 +19,7 @@ static PyObject* _breakpoint(PyObject* self, PyObject* args, PyObject* kwds) {
         return NULL;
     }
     Py_INCREF(hook);
-    PyObject *retval = PyObject_Call(hook, args, kwds);
+    retval = PyObject_Call(hook, args, kwds);
     Py_DECREF(hook);
     return retval;
 }
@@ -32,8 +33,13 @@ whatever arguments are passed.\n\
 By default, this drops you into the pdb debugger.");
 
 static PyObject* _breakpointhook(PyObject* self, PyObject* args, PyObject* kwds) {
+    char *envar;
+    PyObject *envar_obj, *modulepath, *module, *hook, *retval, *msg;
+    const char *last_dot, *attrname;
+    int status;
+
     assert(!PyErr_Occurred());
-    char *envar = Py_GETENV("PYTHONBREAKPOINT");
+    envar = Py_GETENV("PYTHONBREAKPOINT");
 
     if (envar == NULL || strlen(envar) == 0) {
         envar = "pdb.set_trace";
@@ -46,15 +52,15 @@ static PyObject* _breakpointhook(PyObject* self, PyObject* args, PyObject* kwds)
      * or the string content might be overwritten by a subsequent call to
      * getenv().  Since importing a module can performs the getenv() calls,
      * we need to save a copy of envar. */
-    PyObject* envar_obj = PyBytes_FromString(envar);
+    envar_obj = PyBytes_FromString(envar);
     if (envar == NULL) {
         PyErr_NoMemory();
         return NULL;
     }
     envar = PyBytes_AS_STRING(envar_obj);
-    const char *last_dot = strrchr(envar, '.');
-    const char *attrname = NULL;
-    PyObject *modulepath = NULL;
+    last_dot = strrchr(envar, '.');
+    attrname = NULL;
+    modulepath = NULL;
 
     if (last_dot == NULL) {
         /* The breakpoint is a built-in, e.g. PYTHONBREAKPOINT=int */
@@ -71,21 +77,21 @@ static PyObject* _breakpointhook(PyObject* self, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    PyObject *module = PyImport_Import(modulepath);
+    module = PyImport_Import(modulepath);
     Py_DECREF(modulepath);
 
     if (module == NULL) {
         goto error;
     }
 
-    PyObject *hook = PyObject_GetAttrString(module, attrname);
+    hook = PyObject_GetAttrString(module, attrname);
     Py_DECREF(module);
 
     if (hook == NULL) {
         goto error;
     }
     Py_DECREF(envar_obj);
-    PyObject *retval = PyObject_Call(hook, args, kwds);
+    retval = PyObject_Call(hook, args, kwds);
     Py_DECREF(hook);
     return retval;
 
@@ -93,12 +99,12 @@ static PyObject* _breakpointhook(PyObject* self, PyObject* args, PyObject* kwds)
     /* If any of the imports went wrong, then warn and ignore. */
     PyErr_Clear();
 
-    PyObject* msg = PyBytes_FromFormat(
+    msg = PyBytes_FromFormat(
         "Ignoring unimportable $PYTHONBREAKPOINT: \"%s\"", envar);
     if (msg == NULL) {
         return NULL;
     }
-    int status = PyErr_Warn(PyExc_RuntimeWarning, PyBytes_AS_STRING(msg));
+    status = PyErr_Warn(PyExc_RuntimeWarning, PyBytes_AS_STRING(msg));
     Py_DECREF(msg);
     Py_DECREF(envar_obj);
     if (status < 0) {

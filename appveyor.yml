@@ -1,0 +1,23 @@
+environment:
+    matrix:
+        - TOXENV: py27
+        - TOXENV: py36
+        - TOXENV: py37
+
+install:
+    - "SET PATH=C:\\Python37;C:\\Python37\\Scripts;%PATH%"
+    - pip install tox virtualenv --upgrade
+
+# Not a C# project
+build: false
+
+test_script: tox
+
+after_test: ".tox\\%TOXENV%\\Scripts\\python setup.py bdist_wheel"
+
+artifacts:
+  - path: dist\*
+
+cache:
+  - '%LOCALAPPDATA%\pip\cache'
+  - '%USERPROFILE%\.cache\pre-commit'
