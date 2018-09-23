@@ -53,7 +53,7 @@ setup(
     name='future_breakpoint',
     description='A backport of `breakpoint` to python<3.7',
     url='https://github.com/asottile/future-breakpoint',
-    version='0.0.0',
+    version='1.0.0',
     author='Anthony Sottile',
     author_email='asottile@umich.edu',
     classifiers=[
