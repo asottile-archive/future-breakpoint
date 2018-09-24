@@ -13,7 +13,7 @@ A backport of `breakpoint` to python<3.7.
 
 ## supported versions
 
-python2.7+
+python2.7+, python3+, (noop on python3.7+)
 
 ## usage
 
