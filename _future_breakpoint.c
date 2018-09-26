@@ -54,7 +54,6 @@ static PyObject* _breakpointhook(PyObject* self, PyObject* args, PyObject* kwds)
      * we need to save a copy of envar. */
     envar_obj = PyBytes_FromString(envar);
     if (envar_obj == NULL) {
-        PyErr_NoMemory();
         return NULL;
     }
     envar = PyBytes_AS_STRING(envar_obj);
