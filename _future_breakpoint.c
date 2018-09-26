@@ -53,7 +53,7 @@ static PyObject* _breakpointhook(PyObject* self, PyObject* args, PyObject* kwds)
      * getenv().  Since importing a module can performs the getenv() calls,
      * we need to save a copy of envar. */
     envar_obj = PyBytes_FromString(envar);
-    if (envar == NULL) {
+    if (envar_obj == NULL) {
         PyErr_NoMemory();
         return NULL;
     }
