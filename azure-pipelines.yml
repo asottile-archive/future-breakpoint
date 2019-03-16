@@ -1,0 +1,31 @@
+trigger:
+  branches:
+    include: [master, test-me-*]
+
+resources:
+  repositories:
+    - repository: asottile
+      type: github
+      endpoint: github
+      name: asottile/azure-pipeline-templates
+      ref: refs/tags/v0.0.9
+
+jobs:
+- template: job--python-tox.yml@asottile
+  parameters:
+    toxenvs: [py27]
+    os: windows
+    name_postfix: _py27
+    pre_test:
+    - script: choco install vcpython27
+      displayName: install vcpython27
+
+- template: job--python-tox.yml@asottile
+  parameters:
+    toxenvs: [py36, py37]
+    os: windows
+
+- template: job--python-tox.yml@asottile
+  parameters:
+    toxenvs: [py27, py36, py37]
+    os: linux

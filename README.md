@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.org/asottile/future-breakpoint.svg?branch=master)](https://travis-ci.org/asottile/future-breakpoint)
-[![Build status](https://ci.appveyor.com/api/projects/status/4b6qu7v13vxc3tue/branch/master?svg=true)](https://ci.appveyor.com/project/asottile/future-breakpoint/branch/master)
-[![Coverage Status](https://coveralls.io/repos/github/asottile/future-breakpoint/badge.svg?branch=master)](https://coveralls.io/github/asottile/future-breakpoint?branch=master)
+[![Build Status](https://asottile.visualstudio.com/asottile/_apis/build/status/asottile.future-breakpoint?branchName=master)](https://asottile.visualstudio.com/asottile/_build/latest?definitionId=18&branchName=master)
+[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/asottile/asottile/18/master.svg)](https://dev.azure.com/asottile/asottile/_build/latest?definitionId=18&branchName=master)
 
 future-breakpoint
 =================
