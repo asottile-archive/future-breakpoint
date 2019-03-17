@@ -50,22 +50,6 @@ class install(_install):
 
 
 setup(
-    name='future_breakpoint',
-    description='A backport of `breakpoint` to python<3.7',
-    url='https://github.com/asottile/future-breakpoint',
-    version='1.0.1',
-    author='Anthony Sottile',
-    author_email='asottile@umich.edu',
-    classifiers=[
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
-    ],
     ext_modules=[Extension('_future_breakpoint', ['_future_breakpoint.c'])],
     cmdclass={'install': install},
 )
