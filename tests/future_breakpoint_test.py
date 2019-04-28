@@ -89,7 +89,7 @@ class TestBreakpoint:
         with mock.patch('pdb.set_trace') as mck:
             with pytest.warns(RuntimeWarning) as warninfo:
                 breakpoint()
-        w, = warninfo
+        w = warninfo[-1]  # in pypy 2.x there are additional warnings
         msg = 'Ignoring unimportable $PYTHONBREAKPOINT: "{}"'.format(envar)
         assert str(w.message) == msg
         mck.assert_not_called()
