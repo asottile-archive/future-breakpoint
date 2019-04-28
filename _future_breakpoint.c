@@ -10,6 +10,11 @@
 #define BUILTINS_MOD "__builtin__"
 #endif
 
+/* pypy does not have a Py_GETENV */
+#ifndef Py_GETENV
+#define Py_GETENV(s) (Py_IgnoreEnvironmentFlag ? NULL : getenv(s))
+#endif
+
 static PyObject* _breakpoint(PyObject* self, PyObject* args, PyObject* kwds) {
     PyObject* retval;
     PyObject *hook = PySys_GetObject("breakpointhook");
