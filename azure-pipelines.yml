@@ -13,6 +13,7 @@ resources:
       ref: refs/tags/v0.0.10
 
 jobs:
+- template: job--pre-commit.yml@asottile
 - template: job--python-tox.yml@asottile
   parameters:
     toxenvs: [py27]
@@ -22,13 +23,11 @@ jobs:
     pre_test:
     - script: choco install vcpython27
       displayName: install vcpython27
-
 - template: job--python-tox.yml@asottile
   parameters:
     toxenvs: [py36, py37]
     os: windows
     wheel_tags: true
-
 - template: job--python-tox.yml@asottile
   parameters:
     toxenvs: [py27, py36, py37]
