@@ -53,8 +53,7 @@ class TestBreakpoint:
 
     def test_envar_good_path_builtin(self):
         os.environ['PYTHONBREAKPOINT'] = 'int'
-        builtins_mod = '__builtin__' if sys.version_info < (3,) else 'builtins'
-        with mock.patch('{}.int'.format(builtins_mod)) as mck:
+        with mock.patch('builtins.int') as mck:
             breakpoint('7')
             mck.assert_called_once_with('7')
 
@@ -89,8 +88,8 @@ class TestBreakpoint:
         with mock.patch('pdb.set_trace') as mck:
             with pytest.warns(RuntimeWarning) as warninfo:
                 breakpoint()
-        w = warninfo[-1]  # in pypy 2.x there are additional warnings
-        msg = 'Ignoring unimportable $PYTHONBREAKPOINT: "{}"'.format(envar)
+        w, = warninfo
+        msg = f'Ignoring unimportable $PYTHONBREAKPOINT: "{envar}"'
         assert str(w.message) == msg
         mck.assert_not_called()
 

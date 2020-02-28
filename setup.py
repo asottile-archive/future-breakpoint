@@ -7,7 +7,6 @@ from setuptools import setup
 from setuptools.command.install import install as _install
 
 
-BUILTINS_MOD = '__builtin__' if sys.version_info < (3,) else 'builtins'
 PTH = (
     'try:\n'
     '    breakpoint\n'
@@ -17,13 +16,11 @@ PTH = (
     '    except ImportError:\n'
     '        pass\n'
     '    else:\n'
-    '        import {} as builtins\n'
+    '        import builtins\n'
     '        import sys\n'
     '        sys.breakpointhook = _future_breakpoint.breakpointhook\n'
     '        sys.__breakpointhook__ = _future_breakpoint.breakpointhook\n'
-    '        builtins.breakpoint = _future_breakpoint.breakpoint\n'.format(
-        BUILTINS_MOD,
-    )
+    '        builtins.breakpoint = _future_breakpoint.breakpoint\n'
 )
 
 
@@ -31,9 +28,9 @@ class install(_install):
     def initialize_options(self):
         _install.initialize_options(self)
         # Use this prefix to get loaded as early as possible
-        name = 'aaaaa_' + self.distribution.metadata.name
+        name = f'aaaaa_{self.distribution.metadata.name}'
 
-        contents = 'import sys; exec({!r})\n'.format(PTH)
+        contents = f'import sys; exec({PTH!r})\n'
         self.extra_path = (name, contents)
 
     def finalize_options(self):

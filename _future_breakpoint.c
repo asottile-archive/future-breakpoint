@@ -141,7 +141,6 @@ static struct PyMethodDef methods[] = {
     {NULL, NULL}
 };
 
-#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef module = {
     PyModuleDef_HEAD_INIT,
     "_future_breakpoint",
@@ -153,8 +152,3 @@ static struct PyModuleDef module = {
 PyMODINIT_FUNC PyInit__future_breakpoint(void) {
     return PyModule_Create(&module);
 }
-#else
-PyMODINIT_FUNC init_future_breakpoint(void) {
-    Py_InitModule3("_future_breakpoint", methods, NULL);
-}
-#endif
