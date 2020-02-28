@@ -10,19 +10,10 @@ resources:
       type: github
       endpoint: github
       name: asottile/azure-pipeline-templates
-      ref: refs/tags/v1.0.0
+      ref: refs/tags/v1.0.1
 
 jobs:
 - template: job--pre-commit.yml@asottile
-- template: job--python-tox.yml@asottile
-  parameters:
-    toxenvs: [py27]
-    os: windows
-    wheel_tags: true
-    name_postfix: _py27
-    pre_test:
-    - script: choco install vcpython27
-      displayName: install vcpython27
 - template: job--python-tox.yml@asottile
   parameters:
     toxenvs: [py36, py37]
@@ -30,5 +21,5 @@ jobs:
     wheel_tags: true
 - template: job--python-tox.yml@asottile
   parameters:
-    toxenvs: [pypy, pypy3, py27, py36, py37]
+    toxenvs: [pypy3, py36, py37]
     os: linux
