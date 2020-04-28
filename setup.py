@@ -1,6 +1,5 @@
 import distutils
 import os.path
-import sys
 
 from setuptools import Extension
 from setuptools import setup
