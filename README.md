@@ -34,4 +34,5 @@ See [PEP 553](https://www.python.org/dev/peps/pep-0553/) for full usage!
 
 ## you may also like
 
+- [future-annotations](https://github.com/asottile/future-annotations)
 - [future-fstrings](https://github.com/asottile/future-fstrings)
