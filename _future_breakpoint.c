@@ -4,12 +4,6 @@
 
 #include <Python.h>
 
-#if PY_MAJOR_VERSION >= 3
-#define BUILTINS_MOD "builtins"
-#else
-#define BUILTINS_MOD "__builtin__"
-#endif
-
 /* pypy does not have a Py_GETENV */
 #ifndef Py_GETENV
 #define Py_GETENV(s) (Py_IgnoreEnvironmentFlag ? NULL : getenv(s))
@@ -68,7 +62,7 @@ static PyObject* _breakpointhook(PyObject* self, PyObject* args, PyObject* kwds)
 
     if (last_dot == NULL) {
         /* The breakpoint is a built-in, e.g. PYTHONBREAKPOINT=int */
-        modulepath = PyUnicode_FromString(BUILTINS_MOD);
+        modulepath = PyUnicode_FromString("builtins");
         attrname = envar;
     }
     else {
