@@ -25,7 +25,7 @@ PTH = (
 
 class install(_install):
     def initialize_options(self):
-        _install.initialize_options(self)
+        super().initialize_options()
         # Use this prefix to get loaded as early as possible
         name = f'aaaaa_{self.distribution.metadata.name}'
 
@@ -33,7 +33,7 @@ class install(_install):
         self.extra_path = (name, contents)
 
     def finalize_options(self):
-        _install.finalize_options(self)
+        super().finalize_options()
 
         if self.install_lib.endswith(self.extra_path[1]):
             self.install_lib = self.install_libbase
